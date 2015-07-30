@@ -1,0 +1,34 @@
+{
+    "provider": {
+        "name": "Wildboard Repository",
+        "url": "https://github.com/thewildboard/wildboard"
+    },
+    "sources": [
+        {
+            "id": "coverage",
+            "description": "Coverage of the wildboard",
+            "url": "http://localhost:7654/api/coverage",
+            "type": "number",
+            "refresh_rate": "00 * * * *"
+        },
+        {
+            "id": "open-issues",
+            "description": "Open Issues",
+            "url": "http://localhost:7654/api/open-issues",
+            "type": "number",
+            "refresh_rate": "00 * * * *"
+        },
+        {
+            "id": "closed-issues",
+            "description": "Closed Issues",
+            "url": "http://localhost:7654/api/closed-issues",
+            "type": "number",
+            "refresh_rate": "00 * * * *"
+        },
+        {
+            "id": "activity",
+            "description":  "Commits per Week",
+            "url": "http://localhost:7654/api/activity"
+        }
+    ]
+}
