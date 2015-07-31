@@ -1,13 +1,13 @@
 {
     "provider": {
-        "name": "Wildboard Repository",
-        "url": "https://github.com/thewildboard/wildboard"
+        "name": "Remote Helper Repository",
+        "url": "https://github.com/RemoteHelper/server"
     },
     "sources": [
         {
             "id": "coverage",
-            "description": "Coverage of Wildboard",
-            "url": "http://localhost:7654/thewildboard/wildboard/coverage",
+            "description": "Coverage of Remote Helper",
+            "url": "http://localhost:7654/RemoteHelper/server/coverage",
             "type": "number",
             "unit": "%",
             "refresh_rate": "00 * * * *"
@@ -15,7 +15,7 @@
         {
             "id": "open-issues",
             "description": "Open Issues",
-            "url": "http://localhost:7654/thewildboard/wildboard/open-issues",
+            "url": "http://localhost:7654/RemoteHelper/server/open-issues",
             "type": "number",
             "unit": "open issues",
             "refresh_rate": "00 * * * *"
@@ -23,7 +23,7 @@
         {
             "id": "closed-issues",
             "description": "Closed Issues",
-            "url": "http://localhost:7654/thewildboard/wildboard/closed-issues",
+            "url": "http://localhost:7654/RemoteHelper/server/closed-issues",
             "type": "number",
             "unit": "closed issues",
             "refresh_rate": "00 * * * *"
@@ -31,7 +31,7 @@
         {
             "id": "activity",
             "description":  "Commits per Week",
-            "url": "http://localhost:7654/thewildboard/wildboard/activity",
+            "url": "http://localhost:7654/RemoteHelper/server/activity",
             "type": "number",
             "unit": "commits per week",
             "refresh_rate": "00 * * * *"

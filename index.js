@@ -6,30 +6,42 @@ var server = ServeMe({
   home: "/manifest.json"
 });
 
-server.get("/api/coverage", function(req, next) {
-  closedIssues(function(closed) {
-    allIssues(function(all) {
+server.get("/:user/:repo/coverage", function(req, next) {
+  var user = req.params.user,
+      repo = req.params.repo;
+
+  closedIssues(user, repo, function(closed) {
+    allIssues(user, repo, function(all) {
+      console.log(closed + "/" + all);
       next("" + (closed / all * 100));
     });
   });
-});
+})
 
-server.get("/api/open-issues", function(req, next) {
-  openIssues(function(count) {
+.get("/:user/:repo/open-issues", function(req, next) {
+  var user = req.params.user,
+      repo = req.params.repo;
+
+  openIssues(user, repo, function(count) {
     next("" + count);
   });
-});
+})
 
-server.get("/api/closed-issues", function(req, next) {
-  closedIssues(function(count) {
+.get("/:user/:repo/closed-issues", function(req, next) {
+  var user = req.params.user,
+      repo = req.params.repo;
+
+  closedIssues(user, repo, function(count) {
     next("" + count);
   });
-});
+})
 
+.get("/:user/:repo/activity", function(req, next) {
+  var user = req.params.user,
+      repo = req.params.repo;
 
-server.get("/api/activity", function(req, next) {
   request({
-    url: "https://api.github.com/repos/thewildboard/wildboard/stats/commit_activity",
+    url: "https://api.github.com/repos/" + user + "/" + repo + "/stats/commit_activity",
     headers: {
       'user-agent': 'node.js'
     }
@@ -58,9 +70,9 @@ server.start(7654);
 
 
 
-function openIssues(fn) {
+function openIssues(user, repo, fn) {
   request({
-    url: "https://api.github.com/repos/thewildboard/wildboard/issues?per_page=200&state=open",
+    url: "https://api.github.com/repos/" + user + "/" + repo + "/issues?per_page=200&state=open",
     headers: {
       'user-agent': 'node.js'
     }
@@ -75,9 +87,9 @@ function openIssues(fn) {
   });
 }
 
-function closedIssues(fn) {
+function closedIssues(user, repo, fn) {
   request({
-    url: "https://api.github.com/repos/thewildboard/wildboard/issues?per_page=200&state=closed",
+    url: "https://api.github.com/repos/" + user + "/" + repo + "/issues?per_page=200&state=closed",
     headers: {
       'user-agent': 'node.js'
     }
@@ -92,9 +104,9 @@ function closedIssues(fn) {
   });
 }
 
-function allIssues(fn) {
+function allIssues(user, repo, fn) {
   request({
-    url: "https://api.github.com/repos/thewildboard/wildboard/issues?per_page=200&state=all",
+    url: "https://api.github.com/repos/" + user + "/" + repo + "/issues?per_page=200&state=all",
     headers: {
       'user-agent': 'node.js'
     }
