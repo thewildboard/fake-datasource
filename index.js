@@ -8,37 +8,48 @@ var server = ServeMe({
 
 server.get("/:user/:repo/coverage", function(req, next) {
   var user = req.params.user,
-      repo = req.params.repo;
+    repo = req.params.repo;
 
   closedIssues(user, repo, function(closed) {
     allIssues(user, repo, function(all) {
-      console.log(closed + "/" + all);
-      next("" + (closed / all * 100));
+      if (!closed || !all || all == 0) {
+        next("0");
+      } else {
+        next("" + (closed / all * 100));
+      }
     });
   });
 })
 
 .get("/:user/:repo/open-issues", function(req, next) {
   var user = req.params.user,
-      repo = req.params.repo;
+    repo = req.params.repo;
 
   openIssues(user, repo, function(count) {
-    next("" + count);
+    if (!count) {
+      next("0");
+    } else {
+      next("" + count);
+    }
   });
 })
 
 .get("/:user/:repo/closed-issues", function(req, next) {
   var user = req.params.user,
-      repo = req.params.repo;
+    repo = req.params.repo;
 
   closedIssues(user, repo, function(count) {
-    next("" + count);
+    if (!count) {
+      next("0");
+    } else {
+      next("" + count);
+    }
   });
 })
 
 .get("/:user/:repo/activity", function(req, next) {
   var user = req.params.user,
-      repo = req.params.repo;
+    repo = req.params.repo;
 
   request({
     url: "https://api.github.com/repos/" + user + "/" + repo + "/stats/commit_activity",
@@ -62,7 +73,12 @@ server.get("/:user/:repo/coverage", function(req, next) {
         total += weekTotal;
       }
     }
-    next("" + (total / count));
+
+    if (!total || !count || count == 0) {
+      next("0");
+    } else {
+      next("" + (total / count));
+    }
   });
 });
 
