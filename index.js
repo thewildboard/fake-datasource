@@ -57,8 +57,8 @@ server.get("/:user/:repo/coverage", function(req, next) {
       'user-agent': 'node.js'
     }
   }, function(error, response, body) {
-    if (error) {
-      console.log(error) // Show the HTML for the Google homepage.
+    if (error || response.statusCode != 200) {
+      console.log(error || body) // Show the HTML for the Google homepage.
       next("0");
       return;
     }
@@ -93,9 +93,9 @@ function openIssues(user, repo, fn) {
       'user-agent': 'node.js'
     }
   }, function(error, response, body) {
-    if (error) {
-      console.log(error); // Show the HTML for the Google homepage.
-      fn(-1);
+    if (error || response.statusCode != 200) {
+      console.log(error || body); // Show the HTML for the Google homepage.
+      fn(0);
       return;
     }
     var open = JSON.parse(body);
@@ -110,9 +110,9 @@ function closedIssues(user, repo, fn) {
       'user-agent': 'node.js'
     }
   }, function(error, response, body) {
-    if (error) {
-      console.log(error); // Show the HTML for the Google homepage.
-      fn(-1);
+    if (error || response.statusCode != 200) {
+      console.log(error || body); // Show the HTML for the Google homepage.
+      fn(0);
       return;
     }
     var closed = JSON.parse(body);
@@ -127,9 +127,9 @@ function allIssues(user, repo, fn) {
       'user-agent': 'node.js'
     }
   }, function(error, response, body) {
-    if (error) {
-      console.log(error); // Show the HTML for the Google homepage.
-      fn(-1);
+    if (error || response.statusCode != 200) {
+      console.log(error || body); // Show the HTML for the Google homepage.
+      fn(0);
       return;
     }
     var all = JSON.parse(body);
